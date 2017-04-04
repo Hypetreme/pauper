@@ -1,0 +1,244 @@
+html {
+    background-color: #cfcfcf;
+    text-align: center;
+    height: 100%;
+    min-height: 100%;
+    background-image: url('marble.jpg');
+    overflow-y: scroll;
+}
+
+body {
+  background: rgba(200, 200, 200, 0.6);
+  margin: 0px;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+.menu {
+    border: 0;
+    color: white;
+    width: 13%;
+    height: 93%;
+    background-color: black;
+    float: left;
+    line-height: 3.2em;
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    cursor: pointer;
+}
+.menu:hover {
+    background-color: #eee;
+    color:black;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background: #eee;
+  color:black;
+}
+.page-button {
+  width: 198px;
+}
+input[type="submit"],
+input[type="button"]{
+  background-color: black;
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+  font-size: 18px;
+  font-weight: 400;
+  font-family: 'Droid Sans', sans-serif;
+  border: 0;
+}
+nav-first {
+width:39%;
+float:left;
+}
+nav-second {
+width:61%;
+float:left;
+}
+form {
+    margin: 0;
+}
+
+.preview {
+    text-align: center;
+    float: left;
+    height: 371px;
+    width: 25%;
+    display: table;
+}
+
+.preview img {
+    box-shadow: 13px 11px 20px #262424;
+    border-radius: 12px;
+}
+
+.preview-single {
+    text-align: left;
+    height: 590px;
+    display: block;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.bg {
+    z-index: -1;
+    height: 635px;
+    width: 100%;
+    background-size: 630px;
+    background-repeat: no-repeat;
+    background-position: 50% 7px;
+    position: absolute;
+    opacity: 0.9;
+}
+
+.card-frame {
+    float: left;
+    text-align: right;
+}
+
+@media screen and (max-width: 934px) {
+    .oracle {
+        float: left;
+    }
+    .search {
+        width: 60%;
+    }
+    .info {
+      float:left;
+    }
+}
+
+.card-frame img {
+    width: 100%;
+    box-shadow: 13px 11px 20px #262424;
+    border-radius: 17px;
+}
+
+.card-name {
+    color: white;
+    font-size: 31px;
+    margin-right: 10px;
+    margin-left: 14px;
+    margin-bottom: 0px;
+}
+
+.card-type {
+    color: white;
+    font-size: 20px;
+    text-align: left;
+    margin-right: 10px;
+    margin-left: 14px;
+}
+
+.oracle {
+    background-color: #000c;
+    border-radius: 0px 20px 20px 0px;
+    width: 100%;
+    margin-top: 14px;
+    margin-bottom: 20px;
+    display: table-cell;
+}
+
+.oracle-text {
+    color: white;
+    margin-right: 10px;
+    margin-left: 14px;
+}
+
+p {
+    text-align: center;
+    font-size: 17px;
+    margin-bottom: 0.5rem;
+}
+
+.nav-up {
+    text-align: center;
+    margin-top: 20px;
+    height: 63px;
+}
+
+.nav-bottom {
+    text-align: center;
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    height: 63px;
+}
+
+.all-cards {
+    text-align: center;
+    width: 100%;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.nav {
+    width: 100%;
+    height: 71px;
+    background-color: black;
+    box-shadow: -3px 0px 6px black;
+}
+.footer {
+    width: 100%;
+    background-color: black;
+    box-shadow: -3px 0px 6px black;
+
+}
+.footer p {
+  color:white;
+  font-size: 0.7em;
+}
+.space {
+    margin-top: 20px;
+}
+
+.search {
+    margin-top: 3px;
+    height: 62px!important;
+    float: left;
+    margin-left: 5px;
+}
+
+.no-results {
+    text-align: center;
+}
+
+.card-image {
+    height: 310px;
+    width: 223px;
+}
+.info {
+width:100%;
+}
+.vote {
+    margin-top: 1.5rem;
+}
+
+.rank {
+    margin-top: 15px;
+    min-width: 142px;
+
+}
+
+.Staple {
+    background-color: ffb400!important;
+    color: black!important;
+}
+
+.Cubable {
+    background-color: silver!important;
+}
+
+.Borderline {
+    background-color: #a5672a!important;
+}
+
+.Unknown {
+    background-color: black!important;
+}
