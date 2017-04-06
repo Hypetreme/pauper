@@ -16,6 +16,9 @@ cardView();
 
 </div>
 </html>
+<?php
+include('footer.php');
+ ?>
 <script>
 $('.vote').click(function(event){
     event.preventDefault();

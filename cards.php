@@ -10,10 +10,9 @@ header("Location: cards.php?page=1");
 }
 include('functions.php');
 include('header.php');
-include('nav.php')
+include('nav.php');
 ?>
 
-<html>
 <div class="container">
   <div class="nav-up">
 
@@ -36,7 +35,7 @@ document.getElementsByClassName("nav-up")[0].innerHTML += "<input type=\'submit\
 }?>
 </div>
 </div>
-</html>
 <?php
 include('footer.php');
  ?>
+</html>

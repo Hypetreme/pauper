@@ -1,25 +1,30 @@
 html, body {
-margin: 0;
-padding: 0;
-height: 100%;
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
+
 html {
     background-color: #cfcfcf;
     text-align: center;
-    min-height: 100%;
+    height: 100%;
     background-image: url('marble.jpg');
     overflow-y: scroll;
 }
 
 body {
-  background: rgba(200, 200, 200, 0.6);
-  margin: 0px;
-  min-height: 100%;
-  overflow-x: hidden;
+    background: rgba(200, 200, 200, 0.6);
+    margin: 0px;
+    overflow-y: hidden;
+    position: relative;
 }
+
 .container {
-  /*min-height:100%;*/
+    margin: 0 auto;
+    min-height: 100%;
+    /*height:100%*/
 }
+
 .menu {
     border: 0;
     color: white;
@@ -34,39 +39,43 @@ body {
     transition: all .2s ease-in;
     cursor: pointer;
 }
+
 .menu:hover {
     background-color: #eee;
-    color:black;
+    color: black;
 }
 
-input[type="submit"]:hover,
-input[type="button"]:hover {
-  background: #eee;
-  color:black;
+input[type="submit"]:hover, input[type="button"]:hover {
+    background: #eee;
+    color: black;
 }
+
 .page-button {
-  width: 198px;
+    width: 198px;
 }
-input[type="submit"],
-input[type="button"]{
-  background-color: black;
-  -moz-transition: all .2s ease-in;
-  -o-transition: all .2s ease-in;
-  -webkit-transition: all .2s ease-in;
-  transition: all .2s ease-in;
-  font-size: 18px;
-  font-weight: 400;
-  font-family: 'Droid Sans', sans-serif;
-  border: 0;
+
+input[type="submit"], input[type="button"] {
+    background-color: black;
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: 'Droid Sans', sans-serif;
+    border: 0;
 }
+
 nav-first {
-width:39%;
-float:left;
+    width: 39%;
+    float: left;
 }
+
 nav-second {
-width:61%;
-float:left;
+    width: 61%;
+    float: left;
 }
+
 form {
     margin: 0;
 }
@@ -86,7 +95,7 @@ form {
 
 .preview-single {
     text-align: left;
-    height: 590px;
+    height: 522px;
     display: block;
     align-items: center;
     padding-top: 40px;
@@ -109,6 +118,9 @@ form {
 }
 
 @media screen and (max-width: 934px) {
+  .nav-first {
+    display: none;
+  }
     .oracle {
         float: left;
     }
@@ -116,7 +128,10 @@ form {
         width: 60%;
     }
     .info {
-      float:left;
+        float: left;
+    }
+    .footer {
+      position: relative;
     }
 }
 
@@ -174,6 +189,7 @@ p {
     float: left;
     width: 100%;
     margin-top: 20px;
+    margin-bottom: 90px;
     height: 63px;
 }
 
@@ -182,7 +198,6 @@ p {
     width: 100%;
     margin-top: 25px;
     margin-bottom: 25px;
-    height: 54%;
 }
 
 .nav {
@@ -191,18 +206,24 @@ p {
     background-color: black;
     box-shadow: -3px 0px 6px black;
 }
+
 .footer {
     width: 100%;
     background-color: black;
     box-shadow: -3px 0px 6px black;
-    height:50px;
+    height: 54px;
     padding-top: 17px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
 
-}
 .footer p {
-  color:white;
-  font-size: 0.6em;
+    color: white;
+    font-size: 0.6em;
 }
+
 .space {
     margin-top: 20px;
 }
@@ -222,9 +243,11 @@ p {
     height: 310px;
     width: 223px;
 }
+
 .info {
-width:100%;
+    width: 100%;
 }
+
 .vote {
     margin-top: 1.5rem;
 }
@@ -232,7 +255,6 @@ width:100%;
 .rank {
     margin-top: 15px;
     min-width: 142px;
-
 }
 
 .Staple {
