@@ -8,6 +8,7 @@ function getCards()
     }
     if (!isset($_GET['rank'])) {
         $card = file_get_contents('https://api.scryfall.com/cards/search?q=r:common+not:online'.$exclude.'&page='.$page.'');
+        $results = true;
     } elseif (isset($_GET['rank'])) {
         include('dbh.php');
         if ($_GET['rank'] == "staple") {
@@ -26,13 +27,15 @@ function getCards()
             $names = substr($names, 0, strlen($names)-4);
             $names = rawurlencode($names);
             $card = file_get_contents('https://api.scryfall.com/cards/search?q=('.$names.')'.$exclude.'+r:common+not:online');
+            $results = true;
         } else {
           echo '<div class="no-results">';
           echo '<h3>No results.</h3>';
           echo '</div>';
-          exit();
+          $results = false;
         }
     }
+    if ($results == true) {
     $card = json_decode($card, true);
     $more = $card['has_more'];
     if (!empty($card['data'])) {
@@ -65,6 +68,7 @@ function getCards()
     } else {
         //header("Location: index.php");
     }
+  }
 }
 function cardView()
 {

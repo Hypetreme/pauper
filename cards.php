@@ -39,3 +39,16 @@ document.getElementsByClassName("nav-up")[0].innerHTML += "<input type=\'submit\
 include('footer.php');
  ?>
 </html>
+<script>
+$( ".nav-mobile" ).click(function(event) {
+  event.stopPropagation();
+  $( ".nav-mobile" ).toggleClass('open');
+  if ($( ".nav-mobile" ).hasClass('open')) {
+  $( ".nav-first" ).slideDown();
+  $( ".nav-first" ).css('display', 'grid');
+} else {
+  $( ".nav-first" ).slideUp();
+  $( ".nav-first" ).css('display', 'grid');
+}
+});
+</script>

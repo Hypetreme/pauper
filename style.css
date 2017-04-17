@@ -120,6 +120,17 @@ form {
 @media screen and (max-width: 934px) {
   .nav-first {
     display: none;
+    position: absolute;
+    right: 0px;
+    top: 79px;
+    z-index: 1;
+  }
+  .menu {
+    width: initial;
+    padding: 5px;
+  }
+  .nav-mobile {
+    display: initial!important;
   }
     .oracle {
         float: left;
@@ -272,4 +283,15 @@ p {
 
 .Unknown {
     background-color: black!important;
+}
+.nav-mobile {
+  color:white;
+  float:right;
+  margin-top: 12px;
+  margin-right: 12px;
+  cursor: pointer;
+  display: none;
+}
+.nav-mobile i {
+  font-size: 40px;
 }
