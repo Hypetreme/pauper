@@ -2,7 +2,7 @@
 function getCards()
 {
     $page = $names = "";
-    $exclude = "+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09";
+    $exclude = "+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09+-e:td0+-e:mp2";
     if (isset($_GET['page'])) {
         $page = $_GET['page'];
     }
@@ -74,9 +74,9 @@ function cardView()
 {
     include('dbh.php');
     $name = str_replace(' ', '+', $_GET['name']);
-    $exclude = "+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09";
-
-    if (@file_get_contents('https://api.scryfall.com/cards/search?q=r:common+not:online+'.$name.$exclude.'') == true) {
+    $exclude = "+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09+-e:td0+-e:mp2";
+    $terms = 'r:common+not:online+';
+    if (@file_get_contents('https://api.scryfall.com/cards/search?q='.$terms.'') == true && $name != "" && preg_match("/[a-z]/i", $name)) {
         $card = json_decode(file_get_contents('https://api.scryfall.com/cards/search?q=r:common+not:online+'.$name.$exclude.''), true);
 
         $name = $card['data'][0]['name'];
@@ -147,8 +147,8 @@ function cardView()
         echo '</div>';
         echo '<div class="space"></div>';
         echo '<div class="info">
-        <input type="submit" class="vote" name="'.$id.'" value="Vote">
-        <input type="submit" class="a" value="'.$rank.'" disabled>
+        <button type="submit" class="vote" name="'.$id.'"><i class="material-icons">thumb_up</i></button>
+        <input type="button" class="rank '.$rank.'" value="'.$rank.'" disabled>
         </div>';
         echo '<div class="oracle">';
         /*echo('<pre style="font-size:15px;">');

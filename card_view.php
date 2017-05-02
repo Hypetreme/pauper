@@ -13,12 +13,12 @@ cardView();
 
 ?>
 </div>
-
 </div>
 </html>
 <?php
 include('footer.php');
  ?>
+<script src="replace.js"></script> 
 <script>
 $('.vote').click(function(event){
     event.preventDefault();
@@ -30,5 +30,17 @@ $('.vote').click(function(event){
       }
 
     });
+});
+
+$( ".nav-mobile" ).click(function(event) {
+  event.stopPropagation();
+  $( ".nav-mobile" ).toggleClass('open');
+  if ($( ".nav-mobile" ).hasClass('open')) {
+  $( ".nav-first" ).css('visibility', 'visible');
+  $( ".nav-first" ).slideDown();
+} else {
+  $( ".nav-first" ).css('visibility', 'visible');
+  $( ".nav-first" ).slideUp();
+}
 });
 </script>

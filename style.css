@@ -25,6 +25,7 @@ body {
     /*height:100%*/
 }
 
+
 .menu {
     border: 0;
     color: white;
@@ -40,12 +41,7 @@ body {
     cursor: pointer;
 }
 
-.menu:hover {
-    background-color: #eee;
-    color: black;
-}
-
-input[type="submit"]:hover, input[type="button"]:hover {
+.vote:hover, .page-button:hover, .menu:hover {
     background: #eee;
     color: black;
 }
@@ -54,7 +50,7 @@ input[type="submit"]:hover, input[type="button"]:hover {
     width: 198px;
 }
 
-input[type="submit"], input[type="button"] {
+input[type="submit"], input[type="button"], button {
     background-color: black;
     -moz-transition: all .2s ease-in;
     -o-transition: all .2s ease-in;
@@ -119,7 +115,8 @@ form {
 
 @media screen and (max-width: 934px) {
   .nav-first {
-    display: none;
+    display: grid;
+    visibility: hidden;
     position: absolute;
     right: 0px;
     top: 79px;
@@ -131,6 +128,9 @@ form {
   }
   .nav-mobile {
     display: initial!important;
+  }
+  .page-button {
+    float:left;
   }
     .oracle {
         float: left;
@@ -145,7 +145,13 @@ form {
       position: relative;
     }
 }
+@media screen and (min-width: 935px) {
+  .nav-first {
+    visibility: visible;
+    display: block;
+  }
 
+}
 .card-frame img {
     width: 100%;
     box-shadow: 13px 11px 20px #262424;
@@ -173,7 +179,7 @@ form {
     border-radius: 0px 20px 20px 0px;
     width: 100%;
     margin-top: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 90px;
     display: table-cell;
 }
 
@@ -201,7 +207,7 @@ p {
     width: 100%;
     margin-top: 20px;
     margin-bottom: 90px;
-    height: 63px;
+    /*height: 63px;*/
 }
 
 .all-cards {
@@ -222,7 +228,7 @@ p {
     width: 100%;
     background-color: black;
     box-shadow: -3px 0px 6px black;
-    height: 54px;
+    height: 47px;
     padding-top: 17px;
     position: absolute;
     bottom: 0;
@@ -232,7 +238,7 @@ p {
 
 .footer p {
     color: white;
-    font-size: 0.6em;
+    font-size: 0.5em;
 }
 
 .space {
@@ -263,9 +269,8 @@ p {
     margin-top: 1.5rem;
 }
 
-.rank {
-    margin-top: 15px;
-    min-width: 142px;
+.rank:hover {
+cursor: help;
 }
 
 .Staple {
@@ -274,7 +279,7 @@ p {
 }
 
 .Cubable {
-    background-color: silver!important;
+    background-color: #747474 !important;
 }
 
 .Borderline {
@@ -294,4 +299,11 @@ p {
 }
 .nav-mobile i {
   font-size: 40px;
+}
+
+.material-icons {
+  vertical-align: -6px!important;
+}
+.ms-cost {
+  font-size: 0.80em!important;
 }

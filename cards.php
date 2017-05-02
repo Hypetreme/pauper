@@ -44,11 +44,11 @@ $( ".nav-mobile" ).click(function(event) {
   event.stopPropagation();
   $( ".nav-mobile" ).toggleClass('open');
   if ($( ".nav-mobile" ).hasClass('open')) {
+  $( ".nav-first" ).css('visibility', 'visible');
   $( ".nav-first" ).slideDown();
-  $( ".nav-first" ).css('display', 'grid');
 } else {
+  $( ".nav-first" ).css('visibility', 'visible');
   $( ".nav-first" ).slideUp();
-  $( ".nav-first" ).css('display', 'grid');
 }
 });
 </script>
