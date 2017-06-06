@@ -21,7 +21,7 @@ include('nav.php');
 $data = getCards();
 ?>
 <div class="nav-bottom">
-<?if ($data['page'] != 1 && $data['prev_page'] >= 100 && $data['more'] == true) {
+<?if ($data['page'] != 1) {
     echo'<input type="submit" value="Previous Page" class="page-button" onclick="location.href=\'cards.php?page='.($data['page']-1).'\'">';
     echo '<script>
 document.getElementsByClassName("nav-up")[0].innerHTML = "<input type=\'submit\' value=\'Previous Page\' class=\'page-button\' onclick=\'location.href=\"cards.php?page='.($data['page']-1).'\"\'>"

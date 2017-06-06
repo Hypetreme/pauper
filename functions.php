@@ -7,7 +7,7 @@ function getCards()
         $page = $_GET['page'];
     }
     if (!isset($_GET['rank'])) {
-        $card = file_get_contents('https://api.scryfall.com/cards/search?q=r:common+not:online'.$exclude.'&page='.$page.'');
+        $card = file_get_contents('https://api.scryfall.com/cards/search?q=r:common+not:online+f:pauper+'.$exclude.'&page='.$page.'');
         $results = true;
     } elseif (isset($_GET['rank'])) {
         include('dbh.php');
@@ -26,7 +26,7 @@ function getCards()
             }
             $names = substr($names, 0, strlen($names)-4);
             $names = rawurlencode($names);
-            $card = file_get_contents('https://api.scryfall.com/cards/search?q=('.$names.')'.$exclude.'+r:common+not:online');
+            $card = file_get_contents('https://api.scryfall.com/cards/search?q=('.$names.')'.$exclude.'+r:common+not:online+f:pauper');
             $results = true;
         } else {
           echo '<div class="no-results">';
@@ -74,10 +74,10 @@ function cardView()
 {
     include('dbh.php');
     $name = str_replace(' ', '+', $_GET['name']);
-    $exclude = "+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09+-e:td0+-e:mp2";
+    $name = str_replace('\'', '', $name);
+    $exclude = '+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09+-e:td0+-e:mp2';
     $terms = 'r:common+not:online+';
-    if (@file_get_contents('https://api.scryfall.com/cards/search?q='.$terms.'') == true && $name != "" && preg_match("/[a-z]/i", $name)) {
-        $card = json_decode(file_get_contents('https://api.scryfall.com/cards/search?q=r:common+not:online+'.$name.$exclude.''), true);
+        if ($card = json_decode(@file_get_contents("https://api.scryfall.com/cards/search?q=r:common+not:online+f:pauper+!'".$name."'".$exclude.""), true)) {
 
         $name = $card['data'][0]['name'];
         $stmt = $conn->prepare("SELECT * FROM card WHERE name = :name");
