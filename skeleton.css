@@ -33,7 +33,7 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 1080px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
@@ -236,15 +236,15 @@ input[type="url"],
 input[type="password"],
 textarea,
 select {
-  font-size:27px;
-  font-weight: 400;
-  height: 50px;
-  padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
-  background-color: #fff;
-  border: 1px solid #D1D1D1;
-  border-radius: 2px;
-  box-shadow: none;
-  box-sizing: border-box; }
+font-size: 20px;
+font-weight: 400;
+height: 50px;
+padding: 6px 15px;
+background-color: #fff;
+border: 1px solid #D1D1D1;
+border-radius: 2px;
+box-shadow: none;
+box-sizing: border-box; }
 /* Removes awkward default styles on some inputs for iOS */
 input[type="email"],
 input[type="number"],

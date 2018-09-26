@@ -8,7 +8,7 @@
 <div class="menu" onclick="window.location='cards.php?rank=staple&page=1'"><p>Staple</p></div>
 </div>
 <div class="nav-second">
-<input type="search" name="name" class="search" placeholder="Search for a card">
+<input type="search" name="name" class="search" placeholder="Search for a card...">
 <!--<input type="submit" value="Search">-->
 </form>
 <div class="nav-mobile">

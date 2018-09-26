@@ -1,29 +1,31 @@
-<?
+<?php
 include('functions.php');
 include('header.php');
-include('nav.php');
 ?>
 
 <html>
+<?php include('nav.php');
+?>
 <div class="bg"></div>
 <div class="container">
 <div class="preview-single">
-<?
+<?php
 cardView();
 
 ?>
 </div>
 </div>
-</html>
 <?php
 include('footer.php');
  ?>
-<script src="replace.js"></script> 
+</html>
 <script>
 $('.vote').click(function(event){
     event.preventDefault();
     var multiverseid = $(".vote").attr("name");
-    var finish = $.post("functions.php", { voteCard: 'vote', id: multiverseid, name: cardname},
+    var score = $(this).attr("id");
+    var finish = $.post("functions.php", { voteCard: 'vote', id: multiverseid, name: cardname,
+    votedscore: score},
     function(data) {
       if(data){
         console.log(data);

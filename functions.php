@@ -2,60 +2,59 @@
 function getCards()
 {
     $page = $names = "";
-    $exclude = "+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09+-e:td0+-e:mp2";
+    $param = '+r:common+not:digital';
     if (isset($_GET['page'])) {
         $page = $_GET['page'];
     }
-    if (!isset($_GET['rank'])) {
-        $card = file_get_contents('https://api.scryfall.com/cards/search?q=r:common+not:online+f:pauper+'.$exclude.'&page='.$page.'');
+    if (!isset($_GET['rank']) && $card = file_get_contents('https://api.scryfall.com/cards/search?q='.$param.'&page='.$page.'')) {
         $results = true;
     } elseif (isset($_GET['rank'])) {
         include('dbh.php');
         if ($_GET['rank'] == "staple") {
-            $stmt = $conn->prepare("SELECT * FROM card WHERE score >= 20 ");
+            $stmt = $conn->prepare("SELECT * FROM card WHERE score >= 3 ");
         } elseif ($_GET['rank'] == "cubable") {
-            $stmt = $conn->prepare("SELECT * FROM card WHERE score >= 10 AND score < 20");
+            $stmt = $conn->prepare("SELECT * FROM card WHERE score = 2");
         } elseif ($_GET['rank'] == "borderline") {
-            $stmt = $conn->prepare("SELECT * FROM card WHERE score >= 5 AND score < 10");
+            $stmt = $conn->prepare("SELECT * FROM card WHERE score = 1");
         }
         $stmt->execute();
         if ($stmt->rowCount() > 0) {
             while ($row = $stmt->fetch()) {
-                $name = str_replace(' ', '+', $row['name']);
+                $name = $row['name'];
                 $names .= '"'.$name.'"'." or ";
             }
             $names = substr($names, 0, strlen($names)-4);
             $names = rawurlencode($names);
-            $card = file_get_contents('https://api.scryfall.com/cards/search?q=('.$names.')'.$exclude.'+r:common+not:online+f:pauper');
+            $card = file_get_contents('https://api.scryfall.com/cards/search?q=!'.$names.''.$param.'');
             $results = true;
         } else {
           echo '<div class="no-results">';
           echo '<h3>No results.</h3>';
           echo '</div>';
-          $results = false;
         }
     }
-    if ($results == true) {
     $card = json_decode($card, true);
-    $more = $card['has_more'];
-    if (!empty($card['data'])) {
+    if ($results == true && !empty($card['data'])) {
+      $more = $card['has_more'];
         echo '<div class="all-cards">';
-
-
         $length = count($card['data']);
         for ($i=0; $i < $length; $i++) {
-            if (isset($card['data'][$i]['multiverse_id']) && $card['data'][$i]['multiverse_id'] != "0") {
+            /*if (isset($card['data'][$i]['multiverse_id']) && $card['data'][$i]['multiverse_id'] != "0") {
                 $id = $card['data'][$i]['multiverse_id'];
                 $link = 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='.$id.'&type=card';
-            } else {
-                $id = $card['data'][$i]['collector_number'];
-                $link = $card['data'][$i]['image_uri'];
-            }
+            } else {*/
+                $id = $card['data'][$i]['id'];
+              if (!isset($card['data'][$i]['card_faces'])) {
+                $link = $card['data'][$i]['image_uris']['normal'];
+              } else {
+                $link = $card['data'][$i]['card_faces'][0]['image_uris']['normal'];
+              }
+            //}
             $name = str_replace(' ', '+', $card['data'][$i]['name']);
             $img = '<a href="card_view.php?name='.$name.'"><img class="card-image" src="'.$link.'"></a>';
             $name = $card['data'][$i]['name'];
             echo '<div id="'.$id.'" class="preview">';
-            echo '<p>'.$name.'</p>';
+            //echo '<p>'.$name.'</p>';
             echo $img;
             echo '</div>';
         }
@@ -66,43 +65,52 @@ function getCards()
         $data['prev_page'] = $i;
         return $data;
     } else {
+        echo '<div class="no-results">';
+        echo '<h3>Failed to fetch cards.</h3>';
+        echo '</div>';
         //header("Location: index.php");
     }
-  }
 }
 function cardView()
 {
     include('dbh.php');
-    $name = str_replace(' ', '+', $_GET['name']);
-    $name = str_replace('\'', '', $name);
-    $exclude = '+-e:td2+-e:me4+-e:pz2+-e:dpa+-e:cst+-e:dkm+-e:dds+-e:pd2+-e:pd3+-e:h09+-e:td0+-e:mp2';
-    $terms = 'r:common+not:online+';
-        if ($card = json_decode(@file_get_contents("https://api.scryfall.com/cards/search?q=r:common+not:online+f:pauper+!'".$name."'".$exclude.""), true)) {
-
+    if (isset($_GET['name'])) {
+        $name = str_replace(' ', '+', $_GET['name']);
+      }
+        $param = 'r:common+not:digital+not:token+-layout:token+-layout:double_faced_token+-layout:emblem+-layout:scheme+-layout:planar+';
+        if (isset($_GET['name']) && $card = json_decode(@file_get_contents("https://api.scryfall.com/cards/search?q=".$param."name:/^".$name."/"), true)) {
         $name = $card['data'][0]['name'];
         $stmt = $conn->prepare("SELECT * FROM card WHERE name = :name");
         $stmt->bindParam(":name", $name);
         $stmt->execute();
-        $rank = "Unknown";
+        $rank = "No rating";
         if ($row = $stmt->fetch()) {
-            if ($row['score'] >= 20) {
+            if ($row['score'] >= 3) {
                 $rank = "Staple";
-            } elseif ($row['score'] >= 10 && $row['score'] < 20) {
+            } elseif ($row['score'] == 2) {
                 $rank = "Cubable";
-            } elseif ($row['score'] >= 5 && $row['score'] < 10) {
+            } elseif ($row['score'] == 1) {
                 $rank = "Borderline";
             }
         }
+        if (!isset($card['data'][0]['card_faces'])) {
+        $facea = $card['data'][0];
+      } else {
+        $facea = $card['data'][0]['card_faces'][0];
+        $faceb = $card['data'][0]['card_faces'][1];
+      }
 
-        $id = $card['data'][0]['multiverse_id'];
+        $id = "";
         //$link = 'http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid='.$id.'&type=card';
-        $link = $card['data'][0]['image_uri'];
+
+        $link = $facea['image_uris']['normal'];
+
         $img = '<img src="'.$link.'">';
         $color = "";
-        if (isset($card['data'][0]['colors'][0])) {
-            $color = $card['data'][0]['colors'][0];
+        if (isset($facea['colors'][0])) {
+            $color = $facea['colors'][0];
         }
-        if (isset($card['data'][0]['colors'][1])) {
+        if (isset($facea['colors'][1])) {
             $multi_color = "";
         }
 
@@ -139,7 +147,7 @@ function cardView()
         } else {
             echo '<script>
           var cardname = "'.$name.'";';
-            echo 'document.getElementsByClassName("bg")[0].style="background-image:url(\'artifact.png\')";
+            echo 'document.getElementsByClassName("bg")[0].style="background-image:url(\'colorless.png\')";
 </script>';
         }
         echo '<div class="card-frame">';
@@ -147,19 +155,31 @@ function cardView()
         echo '</div>';
         echo '<div class="space"></div>';
         echo '<div class="info">
-        <button type="submit" class="vote" name="'.$id.'"><i class="material-icons">thumb_up</i></button>
+        <button type="submit" id="1" class="vote" name="'.$id.'">B</button>
+        <button type="submit" id="2" class="vote" name="'.$id.'">C</button>
+        <button type="submit" id="3" class="vote" name="'.$id.'">S</button>
+        <!--<button type="submit" class="vote" name="'.$id.'"><i class="material-icons">thumb_up</i></button>-->
         <input type="button" class="rank '.$rank.'" value="'.$rank.'" disabled>
         </div>';
         echo '<div class="oracle">';
         /*echo('<pre style="font-size:15px;">');
         print_r($card['data'][0]);
         echo('</pre>');*/
-        echo '<h3 class="card-name">'.$card['data'][0]['name']."</h3>";
-        echo '<p class="card-type"><i>'.$card['data'][0]['type_line']."</i></p>";
-        if (isset($card['data'][0]['oracle_text'])) {
-            $oracle_text = nl2br($card['data'][0]['oracle_text']);
+        echo '<h3 class="card-name">'.$facea['name']."</h3>";
+        echo '<p class="card-type"><i>'.$facea['type_line']."</i></p>";
+
+        if (isset($facea['oracle_text'])) {
+            $oracle_text = nl2br($facea['oracle_text']);
             echo '<h5 class="oracle-text">'.$oracle_text.'</h5>';
         }
+        if (isset($faceb)) {
+        echo '<h3 class="card-name">'.$faceb['name']."</h3>";
+        echo '<p class="card-type"><i>'.$faceb['type_line']."</i></p>";
+
+        if (isset($faceb['oracle_text'])) {
+            $oracle_text = nl2br($faceb['oracle_text']);
+            echo '<h5 class="oracle-text">'.$oracle_text.'</h5>';
+        } }
         echo '</div>';
     } else {
         echo '<div class="no-results">';
@@ -170,15 +190,15 @@ function cardView()
 function voteCard()
 {
     include('dbh.php');
-    $id = $_POST['id'];
     $name = $_POST['name'];
-    $stmt = $conn->prepare("INSERT INTO card (name, multiverse_id, score) VALUES (:name, :id, score + 1)
-  ON DUPLICATE KEY UPDATE name = :name, multiverse_id = :id, score = score + 1 ");
+    $votedscore = $_POST['votedscore'];
+    $stmt = $conn->prepare("INSERT INTO card (name, score) VALUES (:name, :votedscore)
+      ON DUPLICATE KEY UPDATE name = :name, score = :votedscore ");
     $stmt->bindParam(":name", $name);
-    $stmt->bindParam(":id", $id);
+    $stmt->bindParam(":votedscore", $votedscore);
     $stmt->execute();
     echo "Name: ".$name."\n";
-    echo "Multiverse ID: ".$id;
+    echo "Given score: ".$votedscore;
 }
 if (isset($_POST['voteCard'])) {
     voteCard();
